@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "VePrnSJPfxagm2QaePrzkqS/0RkAcQI/Y84HpnSpgyA=",
+  "Source": "WebAPIPipeline",
+  "BasePath": "_content/WebAPIPipeline",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
