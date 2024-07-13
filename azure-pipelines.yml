@@ -7,7 +7,7 @@ trigger:
 - none
 
 pool:
-  vmImage: 'mi pc VS2022'
+  name: 'mi pc VS2022'
 
 variables:
   solution: '**/WebApiTestPipeline.sln'
