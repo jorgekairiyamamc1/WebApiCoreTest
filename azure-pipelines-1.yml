@@ -6,7 +6,48 @@
 trigger:
 - none
 
-pool:
-  name: 'mi pc VS2022'
+variables:
+  IISWebSiteName: 'WebApiCoreTest'
 
+resources:
+ pipelines:
+   - pipeline: 'buildPipeline'
+     project: 'testpipelineNETCore'
+     source: 'Build Pipeline WebApiCoreTest'
+     branch: 'main'
 
+stages:
+  - stage: DeployWebsite
+    displayName: 'Deploy Website'
+    pool:
+      name: 'mi pc VS2022'
+
+    jobs:
+      - deployment: DeployWebsite
+        displayName: 'Deploy Website'
+        environment: 'Windows 10 Pro.NXHQMAL00V13800'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: none
+
+                - download: 'buildPipeline'
+                  name: 'DownloadBuildArtifacts'
+                  displayName: 'Download Build Artifacts'
+                  artifact: 'drop'
+
+                - task: IISWebAppManagementOnMachineGroup@0
+                  name: 'StopIIS'
+                  displayName: 'Stop IIS Website'
+                  inputs:
+                    IISDeploymentType: 'IISWebsite'
+                    ActionIISWebsite: 'StopWebsite'
+                    StartStopWebsiteName: '${{ variables.IISWebSiteName }}'
+
+                - task: IISWebAppDeploymentOnMachineGroup@0
+                  inputs:
+                    WebSiteName: '${{ variables.IISWebSiteName }}'
+                    #Package: '$(Pipeline.Workspace)\BuildPipelineWebApiCoreTest\drop\'
+                    Package: '$(System.DefaultWorkingDirectory)\**\*.zip'
+                    TakeAppOfflineFlag: true
