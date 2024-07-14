@@ -25,7 +25,9 @@ stages:
     jobs:
       - deployment: DeployWebsite
         displayName: 'Deploy Website'
-        environment: 'Windows 10 Pro.NXHQMAL00V13800'
+        environment: 
+          name: 'Windows 10 Pro.NXHQMAL00V13800'
+          resourceType: VirtualMachine
         strategy:
           runOnce:
             deploy:
