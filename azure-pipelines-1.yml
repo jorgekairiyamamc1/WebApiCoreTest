@@ -51,3 +51,9 @@ stages:
                     #Package: '$(Pipeline.Workspace)\BuildPipelineWebApiCoreTest\drop\'
                     Package: '$(System.DefaultWorkingDirectory)\**\*.zip'
                     TakeAppOfflineFlag: true
+
+                - task: IISWebAppManagementOnMachineGroup@0
+                  inputs:
+                    IISDeploymentType: 'IISWebsite'
+                    ActionIISWebsite: 'StartWebsite'
+                    StartStopWebsiteName: '${{ variables.IISWebSiteName }}'
